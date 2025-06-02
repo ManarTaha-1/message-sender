@@ -11,14 +11,35 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as MessagesImport } from './routes/messages'
 import { Route as LoginImport } from './routes/login'
+import { Route as InstitutionsImport } from './routes/institutions'
+import { Route as ImagesImport } from './routes/images'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
 
+const MessagesRoute = MessagesImport.update({
+  id: '/messages',
+  path: '/messages',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const LoginRoute = LoginImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const InstitutionsRoute = InstitutionsImport.update({
+  id: '/institutions',
+  path: '/institutions',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ImagesRoute = ImagesImport.update({
+  id: '/images',
+  path: '/images',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -39,11 +60,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/images': {
+      id: '/images'
+      path: '/images'
+      fullPath: '/images'
+      preLoaderRoute: typeof ImagesImport
+      parentRoute: typeof rootRoute
+    }
+    '/institutions': {
+      id: '/institutions'
+      path: '/institutions'
+      fullPath: '/institutions'
+      preLoaderRoute: typeof InstitutionsImport
+      parentRoute: typeof rootRoute
+    }
     '/login': {
       id: '/login'
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginImport
+      parentRoute: typeof rootRoute
+    }
+    '/messages': {
+      id: '/messages'
+      path: '/messages'
+      fullPath: '/messages'
+      preLoaderRoute: typeof MessagesImport
       parentRoute: typeof rootRoute
     }
   }
@@ -53,37 +95,52 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/images': typeof ImagesRoute
+  '/institutions': typeof InstitutionsRoute
   '/login': typeof LoginRoute
+  '/messages': typeof MessagesRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/images': typeof ImagesRoute
+  '/institutions': typeof InstitutionsRoute
   '/login': typeof LoginRoute
+  '/messages': typeof MessagesRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/images': typeof ImagesRoute
+  '/institutions': typeof InstitutionsRoute
   '/login': typeof LoginRoute
+  '/messages': typeof MessagesRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login'
+  fullPaths: '/' | '/images' | '/institutions' | '/login' | '/messages'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login'
-  id: '__root__' | '/' | '/login'
+  to: '/' | '/images' | '/institutions' | '/login' | '/messages'
+  id: '__root__' | '/' | '/images' | '/institutions' | '/login' | '/messages'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ImagesRoute: typeof ImagesRoute
+  InstitutionsRoute: typeof InstitutionsRoute
   LoginRoute: typeof LoginRoute
+  MessagesRoute: typeof MessagesRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ImagesRoute: ImagesRoute,
+  InstitutionsRoute: InstitutionsRoute,
   LoginRoute: LoginRoute,
+  MessagesRoute: MessagesRoute,
 }
 
 export const routeTree = rootRoute
@@ -97,14 +154,26 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/login"
+        "/images",
+        "/institutions",
+        "/login",
+        "/messages"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
+    "/images": {
+      "filePath": "images.tsx"
+    },
+    "/institutions": {
+      "filePath": "institutions.tsx"
+    },
     "/login": {
       "filePath": "login.tsx"
+    },
+    "/messages": {
+      "filePath": "messages.tsx"
     }
   }
 }
